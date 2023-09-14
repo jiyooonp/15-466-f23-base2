@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <deque>
+#include <random>
 
 struct PlayMode : Mode
 {
@@ -16,7 +17,8 @@ struct PlayMode : Mode
 	virtual bool handle_event(SDL_Event const &, glm::uvec2 const &window_size) override;
 	virtual void update(float elapsed) override;
 	virtual void draw(glm::uvec2 const &drawable_size) override;
-
+	void updateFakeTobbies();
+	bool startNewLevel();
 	//----- game state -----
 
 	// input tracking:
@@ -30,21 +32,35 @@ struct PlayMode : Mode
 	Scene scene;
 
 	// hexapod leg to wobble:
-	Scene::Transform *hip = nullptr;
-	Scene::Transform *upper_leg = nullptr;
-	Scene::Transform *lower_leg = nullptr;
-	glm::quat hip_base_rotation;
-	glm::quat upper_leg_base_rotation;
-	glm::quat lower_leg_base_rotation;
+	Scene::Transform *tobby = nullptr;
 
-	Scene::Transform *hip_ml = nullptr;
-	Scene::Transform *upper_leg_ml = nullptr;
-	Scene::Transform *lower_leg_ml = nullptr;
-	glm::quat hip_base_rotation_ml;
-	glm::quat upper_leg_base_rotation_ml;
-	glm::quat lower_leg_base_rotation_ml;
-	float wobble = 0.0f;
+	Scene::Transform *house = nullptr;
+	// glm::quat tobby_base_rotation;
+
+	float tobby_speed = 30.0f;
+
+	// fake Tobbies
+	std::vector<Scene::Transform *> fake_tobbies;
+	std::vector<float> fake_tobbies_speeds;
+	std::vector<bool> fake_tobbies_alive;
+	std::vector<glm::vec4> fake_tobbies_params;
+
+	double min = 0;
+	double max = 100;
+
+	// Game state
+	int level = 0;
+	int score = 0;
+
+	// Storage Information
+	Scene::Transform *storage = nullptr;
 
 	// camera:
 	Scene::Camera *camera = nullptr;
+
+	// Fun stuff
+	// lighting
+	glm::vec3 light_energy, light_direction;
+	int light_type;
+	int random_tobby;
 };
