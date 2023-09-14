@@ -131,10 +131,10 @@ bool PlayMode::startNewLevel()
 	tobby->position = glm::vec3(randomValueX, randomValueY, 0.0f);
 
 	// light intial setup for fun
-	// light_energy = glm::vec3((std::rand() % 70) / 100.0, (std::rand() % 80) / 100.0, (std::rand() % 90) / 100.0);
-	// light_energy += glm::vec3(0.3f, 0.2f, 0.1f);
-	// light_direction = glm::vec3((std::rand() % 100) / 100.0, (std::rand() % 100) / 100.0, (std::rand() % 100) / 100.0);
-	// random_tobby = std::rand() % level - 1;
+	light_energy = glm::vec3((std::rand() % 70) / 100.0, (std::rand() % 80) / 100.0, (std::rand() % 90) / 100.0);
+	light_energy += glm::vec3(0.3f, 0.2f, 0.1f);
+	light_direction = glm::vec3((std::rand() % 100) / 100.0, (std::rand() % 100) / 100.0, (std::rand() % 100) / 100.0);
+	random_tobby = std::rand() % level - 1;
 
 	return true;
 }
@@ -301,10 +301,12 @@ void PlayMode::update(float elapsed)
 	down.downs = 0;
 
 	// update light direction for fun
-	// light_direction.x += fake_tobbies[random_tobby]->position.x / 5;
-	// light_direction.y += fake_tobbies[random_tobby]->position.y / 5;
-	// light_direction.z += fake_tobbies[random_tobby]->position.z / 5;
-	// light_direction = glm::normalize(light_direction);
+	if (level > 0 && fake_tobbies_alive[random_tobby])
+	{
+		light_direction.x += fake_tobbies[random_tobby]->position.x / 5.0f;
+		light_direction.y += fake_tobbies[random_tobby]->position.y / 5.0f;
+		light_direction = glm::normalize(light_direction);
+	}
 }
 
 void PlayMode::draw(glm::uvec2 const &drawable_size)
