@@ -84,10 +84,10 @@ PlayMode::PlayMode() : scene(*tobby_scene)
 
 void fitInPlayground(glm::vec3 &position)
 {
-	const double minX = 2;
-	const double minY = 2;
-	const double maxX = 98;
-	const double maxY = 98;
+	const double minX = 4;
+	const double minY = 4;
+	const double maxX = 96;
+	const double maxY = 96;
 
 	if (position.x > maxX)
 		position.x = position.x - maxX * std::floor(position.x / maxX);
